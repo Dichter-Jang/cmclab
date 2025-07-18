@@ -15,17 +15,16 @@ jobs:
     - name: Show Ruby version
       run: ruby --version
 
-    - name: Install Bundler (user install)
-      run: gem install bundler --user-install
+    - name: Install Bundler and dependencies
+      run: |
+        gem install bundler --user-install
+        export PATH="$HOME/.gem/ruby/$(ruby -e 'print RUBY_VERSION')/bin:$PATH"
+        bundle install
 
-    - name: Add Bundler to PATH
-      run: echo "$HOME/.gem/ruby/$(ruby -e 'print RUBY_VERSION')/bin" >> $GITHUB_PATH
-
-    - name: Install dependencies
-      run: bundle install
-
-    - name: Build Jekyll site
-      run: bundle exec jekyll build
+    - name: Build site with Jekyll
+      run: |
+        export PATH="$HOME/.gem/ruby/$(ruby -e 'print RUBY_VERSION')/bin:$PATH"
+        bundle exec jekyll build
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
