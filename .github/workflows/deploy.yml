@@ -12,10 +12,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Install Bundler and dependencies
+    - name: Install Bundler and project dependencies
       run: |
         gem install bundler --user-install
         export PATH="$HOME/.local/share/gem/ruby/3.2.0/bin:$PATH"
+        bundle config set --local path 'vendor/bundle'
         bundle install
 
     - name: Build site with Jekyll
