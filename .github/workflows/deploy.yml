@@ -12,17 +12,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Setup Ruby (use official action)
-      uses: actions/setup-ruby@v1
-      with:
-        ruby-version: 3.1
+    - name: Show default Ruby version
+      run: ruby --version
 
-    - name: Install dependencies
+    - name: Install dependencies manually
       run: |
         gem install bundler
         bundle install
 
-    - name: Build site
+    - name: Build Jekyll site
       run: bundle exec jekyll build
 
     - name: Deploy to GitHub Pages
